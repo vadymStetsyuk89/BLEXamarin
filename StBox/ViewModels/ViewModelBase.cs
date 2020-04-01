@@ -65,7 +65,7 @@ namespace StBox.ViewModels
         public virtual void Dispose()
         {
             OnUnsubscribeFromAppEvents();
-            UnsubscribeOnIntentEvent();
+            //UnsubscribeOnIntentEvent();
         }
 
         protected void ResetCancellationTokenSource(ref CancellationTokenSource cancellationTokenSource)
@@ -84,23 +84,23 @@ namespace StBox.ViewModels
             IsSubscribedOnAppEvents = false;
         }
 
-        protected virtual void SubscribeOnIntentEvent() { }
+        //protected virtual void SubscribeOnIntentEvent() { }
 
-        protected virtual void UnsubscribeOnIntentEvent() { }
+        //protected virtual void UnsubscribeOnIntentEvent() { }
 
-        protected virtual void TakeIntent()
-        {
-            if (!IsIntended)
-            {
-                IsIntended = true;
-                SubscribeOnIntentEvent();
-            }
-        }
+        //protected virtual void TakeIntent()
+        //{
+        //    if (!IsIntended)
+        //    {
+        //        IsIntended = true;
+        //        SubscribeOnIntentEvent();
+        //    }
+        //}
 
-        protected virtual void LoseIntent()
-        {
-            IsIntended = false;
-            UnsubscribeOnIntentEvent();
-        }
+        //protected virtual void LoseIntent()
+        //{
+        //    IsIntended = false;
+        //    UnsubscribeOnIntentEvent();
+        //}
     }
 }

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<boxViews:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
+                          xmlns:boxViews="clr-namespace:StBox.Views;assembly=StBox"
+                          locator:ViewModelLocator.AutoWireViewModel="True"
+                          x:Class="XamarinFormsBox.Views.DeviceServicesView">
+    <boxViews:ContentPageBase.MainContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0">
+                <Label Text="{Binding Path=TargetDevice.Name}"/>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Is connected: "/>
+                    <Label Text="{Binding Path=IsConnected}"/>
+                </StackLayout>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Services" Grid.Row="0"/>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding Path=Services}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=OnExploreServiceCommand}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Path=Name}"/>
+                                    <Label Text="{Binding Path=Service.Id}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </boxViews:ContentPageBase.MainContent>
+</boxViews:ContentPageBase>

@@ -1,5 +1,9 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using StBox.Environment;
+using StBox.Locator;
+using StBox.Services;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace XamarinFormsBox.ViewModels
 {
@@ -10,9 +14,13 @@ namespace XamarinFormsBox.ViewModels
         public DeviceItemViewModel(IDevice device)
         {
             Device = device;
-
             Name = string.IsNullOrEmpty(Device.Name) ? NO_NAME_STUB : Device.Name;
         }
+
+        public ICommand OnExploreDeviceCommand => new Command(async () =>
+        {
+            await ViewModelLocator.Resolve<INavigationService>().NavigateToAsync<DeviceServicesViewModel>(Device);
+        });
 
         private IDevice _device;
         public IDevice Device

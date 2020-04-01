@@ -20,6 +20,9 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=OnExploreDeviceCommand}"/>
+                                </StackLayout.GestureRecognizers>
                                 <Label Text="{Binding Path=Name}"/>
                                 <Label Text="{Binding Path=Device.Id}"/>
                             </StackLayout>

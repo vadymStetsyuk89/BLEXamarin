@@ -89,7 +89,9 @@ namespace StBox.Services
             BoxNavigationPageView navigationPage = GetMainNavigationPage();
 
             Page pageToRemove = navigationPage.Navigation.NavigationStack[navigationPage.Navigation.NavigationStack.Count - 2];
-            //DisposeBindingContext(pageToRemove);
+            /// TODO:
+            /// 
+            DisposeBindingContext(pageToRemove);
             navigationPage.Navigation.RemovePage(pageToRemove);
 
             return Task.FromResult(true);
@@ -103,7 +105,9 @@ namespace StBox.Services
             {
                 var page = navigationPage.Navigation.NavigationStack[i];
 
-                //DisposeBindingContext(page);
+                /// TODO:
+                ///
+                DisposeBindingContext(page);
 
                 navigationPage.Navigation.RemovePage(page);
             }
@@ -115,7 +119,9 @@ namespace StBox.Services
         {
             BoxNavigationPageView navigationPage = GetMainNavigationPage();
 
-            //DisposeBindingContext(mainPage.CurrentPage);
+            /// TODO:
+            ///
+            DisposeBindingContext(navigationPage.CurrentPage);
 
             await navigationPage.PopAsync();
 
@@ -246,13 +252,13 @@ namespace StBox.Services
         /// <summary>
         /// Dispose binding context of the target page.
         /// </summary>
-        //private void DisposeBindingContext(Page targetPage)
-        //{
-        //    if (targetPage?.BindingContext is ViewModelBase)
-        //    {
-        //        ((ViewModelBase)targetPage.BindingContext).Dispose();
-        //    }
-        //}
+        private void DisposeBindingContext(Page targetPage)
+        {
+            if (targetPage?.BindingContext is ViewModelBase)
+            {
+                ((ViewModelBase)targetPage.BindingContext).Dispose();
+            }
+        }
 
         //public void DisposeStack()
         //{

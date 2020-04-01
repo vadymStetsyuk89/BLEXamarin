@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<boxViews:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
+                          xmlns:boxViews="clr-namespace:StBox.Views;assembly=StBox"
+                          locator:ViewModelLocator.AutoWireViewModel="True"
+             x:Class="XamarinFormsBox.Views.DeviceCharacteristicsView">
+    <boxViews:ContentPageBase.MainContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="{Binding Path=TargetService.Name}"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Characteristics" Grid.Row="0"/>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding Path=Characteristics}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=OnExploreServiceCommand}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Path=Name}"/>
+                                    <Label Text="{Binding Path=Characteristic.Id}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </boxViews:ContentPageBase.MainContent>
+</boxViews:ContentPageBase>
