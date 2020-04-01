@@ -1,21 +1,14 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using StBox.Views;
 using Xamarin.Forms.Xaml;
 
 namespace XamarinFormsBox.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPageView : ContentPage
+    public partial class MainPageView : ContentPageBase
     {
         public MainPageView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
         }
     }
 }
