@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using StBox.Locator;
 using XamarinFormsBox.ViewModels;
-using XamarinFormsBox.ViewModels.PagesNavigationTest;
 
 namespace XamarinFormsBox.AppEnvironment
 {
@@ -11,9 +10,6 @@ namespace XamarinFormsBox.AppEnvironment
         {
             /// View models
             builder.RegisterType<MainPageViewModel>();
-            builder.RegisterType<BirdPageViewModel>();
-            builder.RegisterType<CatPageViewModel>();
-            builder.RegisterType<DogPageViewModel>();
 
             /// Services Etc...
         }

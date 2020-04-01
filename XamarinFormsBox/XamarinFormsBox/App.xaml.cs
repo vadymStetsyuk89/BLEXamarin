@@ -3,7 +3,6 @@ using StBox.Services;
 using Xamarin.Forms;
 using XamarinFormsBox.AppEnvironment;
 using XamarinFormsBox.ViewModels;
-using XamarinFormsBox.ViewModels.PagesNavigationTest;
 
 namespace XamarinFormsBox
 {
@@ -19,7 +18,7 @@ namespace XamarinFormsBox
         protected override void OnStart()
         {
             INavigationService navigationService = ViewModelLocator.Resolve<INavigationService>();
-            navigationService.Initialize(typeof(BirdPageViewModel));
+            navigationService.Initialize(typeof(MainPageViewModel));
         }
 
         protected override void OnSleep()
