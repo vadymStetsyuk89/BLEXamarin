@@ -1,5 +1,7 @@
 ﻿using Plugin.BLE.Abstractions.Contracts;
 using StBox.Environment;
+using StBox.Locator;
+using StBox.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -16,7 +18,7 @@ namespace XamarinFormsBox.ViewModels
 
         public ICommand OnExploreCharacteristicCommand => new Command(async () =>
         {
-            //await ViewModelLocator.Resolve<INavigationService>().NavigateToAsync(Service)
+            await ViewModelLocator.Resolve<INavigationService>().NavigateToAsync<CharacteristicDetailsViewModel>(Characteristic);
         });
 
         private ICharacteristic _characteristic;

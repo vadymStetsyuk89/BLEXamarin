@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamarinFormsBox.AppEnvironment;
 
 namespace XamarinFormsBox.ViewModels
 {
@@ -104,8 +105,7 @@ namespace XamarinFormsBox.ViewModels
                 try
                 {
                     IEnumerable<IService> foundServices = await deveice.GetServicesAsync();
-                    List<ServiceItemViewModel> builtServices = new List<ServiceItemViewModel>(foundServices
-                        .Select<IService, ServiceItemViewModel>(_ => BuildServiceItem(_)));
+                    List<ServiceItemViewModel> builtServices = BuildServiceItems(foundServices);
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -137,9 +137,24 @@ namespace XamarinFormsBox.ViewModels
             await ExtractDeviceServicesAsync(TargetDevice);
         }
 
-        private ServiceItemViewModel BuildServiceItem(IService service)
+        private List<ServiceItemViewModel> BuildServiceItems(IEnumerable<IService> services)
         {
-            return new ServiceItemViewModel(service);
+            List<ServiceItemViewModel> result = new List<ServiceItemViewModel>();
+
+            if (services != null)
+            {
+                foreach (IService service in services)
+                {
+                    if (service.Id == BLASpecificationCodes.BATTERY_SERVICE
+                        || service.Id == BLASpecificationCodes.HEALTH_THERMOMETER_SERVICE
+                        || service.Id == BLASpecificationCodes.HEART_RATE_SERVICE)
+                    {
+                        result.Add(new ServiceItemViewModel(service));
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

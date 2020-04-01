@@ -12,6 +12,7 @@ namespace XamarinFormsBox.AppEnvironment
             builder.RegisterType<MainPageViewModel>();
             builder.RegisterType<DeviceServicesViewModel>();
             builder.RegisterType<DeviceCharacteristicsViewModel>();
+            builder.RegisterType<CharacteristicDetailsViewModel>();
 
             /// Services Etc...
         }

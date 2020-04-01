@@ -23,28 +23,12 @@ namespace XamarinFormsBox.ViewModels
             _adapter = CrossBluetoothLE.Current.Adapter;
 
             _adapter.DeviceDiscovered += OnAdapterDeviceDiscovered;
+
+            _adapter.ScanTimeoutElapsed += OnAdapterScanTimeoutElapsed;
         }
 
         public ICommand OnScanForeDevicesCommand => new Command(async () =>
         {
-            //FoundDevices.Clear();
-
-            //foreach (IDevice device in _adapter.ConnectedDevices)
-            //{
-            //    //update rssi for already connected evices (so tha 0 is not shown in the list)
-            //    try
-            //    {
-            //        await device.UpdateRssiAsync();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Trace.Message(ex.Message);
-            //        await _userDialogs.AlertAsync($"Failed to update RSSI for {connectedDevice.Name}");
-            //    }
-
-            //    AddOrUpdateDevice(connectedDevice);
-            //}
-
             Devices.Clear();
 
             if (_ble.State == BluetoothState.On)
@@ -56,7 +40,16 @@ namespace XamarinFormsBox.ViewModels
                 else
                 {
                     _adapter.ScanTimeout = SCANING_TIMEOUT;
-                    await _adapter.StartScanningForDevicesAsync();
+
+                    try
+                    {
+                        IsScanning = true;
+                        await _adapter.StartScanningForDevicesAsync();
+                    }
+                    catch
+                    {
+                        IsScanning = false;
+                    }
                 }
             }
             else
@@ -70,6 +63,16 @@ namespace XamarinFormsBox.ViewModels
         {
             get => _devices;
             private set => SetProperty<ObservableCollection<DeviceItemViewModel>>(ref _devices, value);
+        }
+
+        private bool _isScanning;
+        public bool IsScanning
+        {
+            get => _isScanning;
+            private set {
+                IsBusy = value;
+                SetProperty<bool>(ref _isScanning, value);
+            }
         }
 
         private void OnAdapterDeviceDiscovered(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
@@ -92,6 +95,11 @@ namespace XamarinFormsBox.ViewModels
         private DeviceItemViewModel BuildDeviceItem(IDevice source)
         {
             return new DeviceItemViewModel(source);
+        }
+
+        private void OnAdapterScanTimeoutElapsed(object sender, System.EventArgs e)
+        {
+            IsScanning = false;
         }
     }
 }

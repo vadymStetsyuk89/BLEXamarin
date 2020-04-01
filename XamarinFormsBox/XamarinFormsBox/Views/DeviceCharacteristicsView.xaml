@@ -12,7 +12,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="{Binding Path=TargetService.Name}"/>
+            <Label Margin="12,12,12,0" FontSize="Medium" Grid.Row="0" Text="{Binding Path=TargetService.Name, StringFormat='{0} service'}"/>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -20,17 +20,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Text="Characteristics" Grid.Row="0"/>
+                <Label FontSize="Medium" Margin="12,6,12,6"  Text="Characteristics:" Grid.Row="0"/>
 
-                <ListView Grid.Row="1" ItemsSource="{Binding Path=Characteristics}">
+                <ListView Grid.Row="1" HasUnevenRows="True" ItemsSource="{Binding Path=Characteristics}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout>
+                                <StackLayout Margin="12,6,12,6">
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Path=OnExploreServiceCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding Path=OnExploreCharacteristicCommand}"/>
                                     </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding Path=Name}"/>
+                                    <Label FontSize="Medium" Text="{Binding Path=Name}"/>
                                     <Label Text="{Binding Path=Characteristic.Id}"/>
                                 </StackLayout>
                             </ViewCell>

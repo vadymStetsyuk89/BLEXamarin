@@ -32,7 +32,7 @@
                     CacheType="All" />
 
                 <!--  Semi transparent backing  -->
-                <BoxView BackgroundColor="Yellow" />
+                <!--<BoxView BackgroundColor="Yellow" />-->
             </Grid>
 
             <!--  Main content with menus  -->

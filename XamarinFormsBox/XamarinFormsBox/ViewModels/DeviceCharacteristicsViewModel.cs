@@ -51,6 +51,8 @@ namespace XamarinFormsBox.ViewModels
             {
                 try
                 {
+
+
                     IEnumerable<ICharacteristic> foundCharacteristics = await service.GetCharacteristicsAsync();
                     List<CharacteristicItemViewModel> builtCharacteristics = new List<CharacteristicItemViewModel>(foundCharacteristics
                         .Select<ICharacteristic, CharacteristicItemViewModel>(_ => BuildCharacteristicItem(_)));

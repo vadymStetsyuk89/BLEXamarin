@@ -1,29 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <boxViews:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
-             xmlns:sTControls="clr-namespace:StBox.Views.Controls;assembly=StBox" 
-             xmlns:boxViews="clr-namespace:StBox.Views;assembly=StBox"
-             x:Class="XamarinFormsBox.Views.MainPageView"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
+                          xmlns:sTControls="clr-namespace:StBox.Views.Controls;assembly=StBox"
+                          xmlns:boxViews="clr-namespace:StBox.Views;assembly=StBox"
+                          x:Class="XamarinFormsBox.Views.MainPageView"
              locator:ViewModelLocator.AutoWireViewModel="True">
     <boxViews:ContentPageBase.MainContent>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <sTControls:ButtonControl Grid.Row="0" ButtonText="Scan for devices" ButtonCommand="{Binding Path=OnScanForeDevicesCommand}"/>
+            <sTControls:ButtonControl Margin="0,0,0,0" HorizontalOptions="Fill" ButtonBackgroundColor="LightGray" ButtonFontSize="16" Grid.Row="0" ButtonText="Scan for devices" ButtonCommand="{Binding Path=OnScanForeDevicesCommand}"/>
 
-            <ListView Grid.Row="1" ItemsSource="{Binding Path=Devices}">
+            <StackLayout Margin="0,12,0,6" Orientation="Horizontal" Grid.Row="1">
+                <Label FontSize="Small" Text="Is scanning: " VerticalTextAlignment="Center"/>
+                <Label FontSize="Medium" Text="{Binding Path=IsScanning}"/>
+            </StackLayout>
+
+            <ListView Grid.Row="2" HasUnevenRows="True" ItemsSource="{Binding Path=Devices}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
+                            <StackLayout Margin="0,6,0,6">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=OnExploreDeviceCommand}"/>
                                 </StackLayout.GestureRecognizers>
-                                <Label Text="{Binding Path=Name}"/>
+                                <Label FontSize="Medium" Text="{Binding Path=Name}"/>
                                 <Label Text="{Binding Path=Device.Id}"/>
                             </StackLayout>
                         </ViewCell>
