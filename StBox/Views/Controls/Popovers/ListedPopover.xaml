@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<base:PopoverBase xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:controls="clr-namespace:StBox.Views.Controls"
+                  xmlns:base="clr-namespace:StBox.Views.Controls.Popovers.Base"
+                  xmlns:stacklistcontrol="clr-namespace:StBox.Views.Controls.StackListControl"
+                  x:Class="StBox.Views.Controls.Popovers.ListedPopover" 
+                  x:Name="_root_PopoverBase">
+    <controls:ContentViewExtended
+        BackgroundColor="{StaticResource Key=WhiteColor}"
+        BorderColor="{StaticResource Key=GrayBorderColor}"
+        BorderThickness="1"
+        CornerRadius="3">
+        <stacklistcontrol:StackList
+            x:Name="_itemsList_StackList"
+            ItemsSource="{Binding Source={Reference Name=_root_PopoverBase}, Path=ItemContext}"
+            SelectedItem="{Binding Source={Reference Name=_root_PopoverBase}, Path=SelectedItem, Mode=TwoWay}" />
+    </controls:ContentViewExtended>
+</base:PopoverBase>

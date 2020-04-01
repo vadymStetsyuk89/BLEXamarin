@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:popovers="clr-namespace:StBox.Views.Controls.Popovers" 
+             xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:StBox.Views.Controls" 
+             xmlns:popups="clr-namespace:StBox.Views.Controls.Popups"
+             x:Class="StBox.Views.ContentPageBase"
+             ios:Page.UseSafeArea="True"
+             NavigationPage.HasNavigationBar="False">
+    
+    <popovers:PopoverKeeper>
+        <Grid
+            AbsoluteLayout.LayoutBounds="1,1,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="White"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="0" />
+            </Grid.RowDefinitions>
+
+            <!--  App background image spot  -->
+            <Grid x:Name="_appBackgroundImageSpot_Grid" Grid.Row="0">
+
+                <!--  Background image  -->
+                <ffImage:CachedImage
+                    x:Name="_backgroundImage_CachedImage"
+                    Aspect="AspectFill"
+                    CacheType="All" />
+
+                <!--  Semi transparent backing  -->
+                <BoxView BackgroundColor="Yellow" />
+            </Grid>
+
+            <!--  Main content with menus  -->
+            <Grid
+                Grid.Row="0"
+                ColumnSpacing="0"
+                RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <!--  Row for hiding  -->
+                    <RowDefinition Height="0" />
+                    <!--  Row for action bar, menu  -->
+                    <RowDefinition Height="Auto" />
+                    <!--  Main content row  -->
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <!--  Main content elements  -->
+                <Grid
+                    Grid.Row="2"
+                    ColumnSpacing="0"
+                    RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ContentView Grid.Row="0">
+                        <!--  Main content spot  -->
+                        <controls:PullToRefreshLayout
+                            x:Name="_mainContentSpot_PullToRefreshLayout"
+                            AbsoluteLayout.LayoutBounds="1,1,1,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            IsPullToRefreshEnabled="False"
+                            RefreshBackgroundColor="White"
+                            RefreshColor="LightBlue">
+                            <Grid x:Name="_contentBox_Grid" >
+                            </Grid>
+                        </controls:PullToRefreshLayout>
+                    </ContentView>
+
+                    <!--  Bottom bar spot  -->
+                    <Grid
+                        x:Name="_bottomBarSpot_Grid"
+                        Grid.Row="1"
+                        ColumnSpacing="0" />
+                </Grid>
+
+                <!--  Menu  -->
+                <ScrollView x:Name="_menuContentSpot_ScrollView" Grid.Row="0" />
+
+                <!--  Action bar spot  -->
+                <ContentView x:Name="_actionBarSpot_ContentView" Grid.Row="1" />
+            </Grid>
+
+            <!--  Popup spot  -->
+            <ContentView x:Name="_popupSpot_ContentView" Grid.Row="1">
+                <popups:PopupsBlockView x:Name="_popupsKeeper_PopupsBlockView" />
+            </ContentView>
+
+            <controls:BusyIndicator
+                x:Name="_busyIndicator_Indicator"
+                Grid.Row="1"
+                IndicatorColor="White"
+                PadCanvasColor="Black" />
+        </Grid>
+    </popovers:PopoverKeeper>
+</ContentPage>
