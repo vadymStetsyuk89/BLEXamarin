@@ -1,7 +1,8 @@
-﻿using StBox.Services;
+﻿using Plugin.BLE;
+using Plugin.BLE.Abstractions.Contracts;
 using StBox.ViewModels;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,57 +10,88 @@ namespace XamarinFormsBox.ViewModels
 {
     public class MainPageViewModel : ContentPageBaseViewModel
     {
-        private readonly IDialogService _FOO_dialogService;
+        private const int SCANING_TIMEOUT = 5000;
 
-        public MainPageViewModel(IDialogService dialogService)
+        private IBluetoothLE _ble;
+        private IAdapter _adapter;
+
+        public MainPageViewModel()
         {
-            _FOO_dialogService = dialogService;
+            Devices = new ObservableCollection<DeviceItemViewModel>();
+
+            _ble = CrossBluetoothLE.Current;
+            _adapter = CrossBluetoothLE.Current.Adapter;
+
+            _adapter.DeviceDiscovered += OnAdapterDeviceDiscovered;
         }
 
-        public ICommand FooCommand => new Command(async () =>
+        public ICommand OnScanForeDevicesCommand => new Command(async () =>
         {
-            await DialogService.ToastAsync("Hello world");
-        });
+            //FoundDevices.Clear();
 
-        public ICommand OnButtonControlCommand => new Command(() =>
-        {
-            IsBusy = true;
+            //foreach (IDevice device in _adapter.ConnectedDevices)
+            //{
+            //    //update rssi for already connected evices (so tha 0 is not shown in the list)
+            //    try
+            //    {
+            //        await device.UpdateRssiAsync();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Trace.Message(ex.Message);
+            //        await _userDialogs.AlertAsync($"Failed to update RSSI for {connectedDevice.Name}");
+            //    }
 
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            //    AddOrUpdateDevice(connectedDevice);
+            //}
+
+            Devices.Clear();
+
+            if (_ble.State == BluetoothState.On)
             {
-                IsBusy = false;
-
-                StackListTestSrc = new List<string>() { "Hello", "Beautiful", "World" };
-
-                return false;
-            });
-        });
-
-        public ICommand RefreshCommand => new Command(() =>
-        {
-            IsRefreshing = true;
-
-            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+                if (_adapter.IsScanning)
+                {
+                    await DialogService.ToastAsync("Wait, still scanning.");
+                }
+                else
+                {
+                    _adapter.ScanTimeout = SCANING_TIMEOUT;
+                    await _adapter.StartScanningForDevicesAsync();
+                }
+            }
+            else
             {
-                IsRefreshing = false;
-
-                return false;
-            });
+                await DialogService.ToastAsync("Turn on bluetooth.");
+            }
         });
 
-        private bool _isRefreshing;
-
-        public bool IsRefreshing
+        private ObservableCollection<DeviceItemViewModel> _devices;
+        public ObservableCollection<DeviceItemViewModel> Devices
         {
-            get => _isRefreshing;
-            set => SetProperty<bool>(ref _isRefreshing, value);
+            get => _devices;
+            private set => SetProperty<ObservableCollection<DeviceItemViewModel>>(ref _devices, value);
         }
 
-        private List<string> _stackListTestSrc;
-        public List<string> StackListTestSrc
+        private void OnAdapterDeviceDiscovered(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
         {
-            get => _stackListTestSrc;
-            set => SetProperty<List<string>>(ref _stackListTestSrc, value);
+            IDevice incommingDevice = e.Device;
+            DeviceItemViewModel existingDevice = Devices.FirstOrDefault(deviceItem => deviceItem.Device.Id == incommingDevice.Id);
+
+            if (existingDevice != null)
+            {
+                int index = Devices.IndexOf(existingDevice);
+                Devices.Add(BuildDeviceItem(incommingDevice));
+                Devices.Remove(existingDevice);
+            }
+            else
+            {
+                Devices.Add(BuildDeviceItem(incommingDevice));
+            }
+        }
+
+        private DeviceItemViewModel BuildDeviceItem(IDevice source)
+        {
+            return new DeviceItemViewModel(source);
         }
     }
 }

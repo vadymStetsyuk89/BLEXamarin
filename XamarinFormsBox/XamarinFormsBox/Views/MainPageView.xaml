@@ -2,10 +2,9 @@
 <boxViews:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
-             xmlns:sTControls="clr-namespace:StBox.Views.Controls;assembly=StBox" xmlns:stacklistcontrol="clr-namespace:StBox.Views.Controls.StackListControl;assembly=StBox" 
+             xmlns:sTControls="clr-namespace:StBox.Views.Controls;assembly=StBox" 
              xmlns:boxViews="clr-namespace:StBox.Views;assembly=StBox"
              x:Class="XamarinFormsBox.Views.MainPageView"
-             NavigationPage.HasNavigationBar="False"
              locator:ViewModelLocator.AutoWireViewModel="True">
     <boxViews:ContentPageBase.MainContent>
         <Grid>
@@ -14,9 +13,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Text="Scan fore devices" Grid.Row="0"/>
+            <sTControls:ButtonControl Grid.Row="0" ButtonText="Scan for devices" ButtonCommand="{Binding Path=OnScanForeDevicesCommand}"/>
 
-            <ListView Grid.Row="1"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding Path=Devices}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Path=Name}"/>
+                                <Label Text="{Binding Path=Device.Id}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </boxViews:ContentPageBase.MainContent>
 </boxViews:ContentPageBase>
