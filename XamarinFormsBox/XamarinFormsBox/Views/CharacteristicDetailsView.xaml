@@ -17,16 +17,14 @@
                 <Label Margin="12,12,12,0" FontSize="Medium" Text="{Binding Path=TargetCharacteristic.Name}"/>
                 <Label Margin="12,0,12,0" Text="{Binding Path=TargetCharacteristic.Id}"/>
 
-                <Label Margin="12,12,0,0" Text="{Binding Permissions, StringFormat='Permissions: {0}'}"/>
+                <Label FontSize="Medium" Margin="12,12,0,0" Text="{Binding Permissions, StringFormat='Permissions: {0}'}"/>
             </StackLayout>
 
             <StackLayout Margin="12,12,12,0" Grid.Row="1">
                 <sTControls:ButtonControl Margin="0,0,0,12" BackgroundColor="LightGray" Grid.Column="0" ButtonText="Read value" ButtonCommand="{Binding Path=OnReadValueCommand}"/>
 
-                <StackLayout Orientation="Horizontal">
-                </StackLayout>
-                    <Label FontSize="Small" VerticalOptions="Center" Text="{Binding Path=LastValueDateStamp,StringFormat='Value (at {0:hh:mm:ss}):'}"/>
-                    <Label FontSize="Medium" VerticalOptions="Center" Text="{Binding Path=LastReadValue}"/>
+                <Label FontSize="Medium" VerticalOptions="Center" Text="{Binding Path=LastValueDateStamp,StringFormat='Value (at {0:hh:mm:ss}):'}"/>
+                <Label FontSize="Medium" VerticalOptions="Center" Text="{Binding Path=LastReadValue}"/>
 
             </StackLayout>
         </Grid>
