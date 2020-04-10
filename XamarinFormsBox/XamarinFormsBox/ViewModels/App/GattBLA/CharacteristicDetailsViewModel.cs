@@ -46,39 +46,45 @@ namespace XamarinFormsBox.ViewModels
         });
 
         private string _writeValueInput = string.Empty;
-        public string WriteValueInput
-        {
+        public string WriteValueInput {
             get => _writeValueInput;
             set => SetProperty<string>(ref _writeValueInput, value);
         }
 
+        private bool _isSubscribedToChanges;
+        public bool IsSubscribedToChanges {
+            get => _isSubscribedToChanges;
+            set {
+                SetProperty<bool>(ref _isSubscribedToChanges, value);
+                OnResolveCharacteristicChangesSubsctiption();
+            }
+        }
+
         private string _lastReadValue;
-        public string LastReadValue
-        {
+        public string LastReadValue {
             get => _lastReadValue;
             private set => SetProperty<string>(ref _lastReadValue, value);
         }
 
         private DateTime _lastValueDateStamp;
-        public DateTime LastValueDateStamp
-        {
+        public DateTime LastValueDateStamp {
             get => _lastValueDateStamp;
-            private set=> SetProperty<DateTime>(ref _lastValueDateStamp, value);
+            private set => SetProperty<DateTime>(ref _lastValueDateStamp, value);
         }
 
         private string _permissions;
-        public string Permissions
-        {
+        public string Permissions {
             get => _permissions;
             private set => SetProperty<string>(ref _permissions, value);
         }
 
         private ICharacteristic _targetCharacteristic;
-        public ICharacteristic TargetCharacteristic
-        {
+        public ICharacteristic TargetCharacteristic {
             get => _targetCharacteristic;
-            private set
-            {
+            private set {
+                if (TargetCharacteristic != null)
+                    TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
+
                 SetProperty<ICharacteristic>(ref _targetCharacteristic, value);
 
                 if (value != null)
@@ -91,6 +97,8 @@ namespace XamarinFormsBox.ViewModels
                 {
                     Permissions = string.Empty;
                 }
+
+                OnResolveCharacteristicChangesSubsctiption();
             }
         }
 
@@ -100,6 +108,10 @@ namespace XamarinFormsBox.ViewModels
 
             WriteValueInput = string.Empty;
             LastReadValue = string.Empty;
+
+            if (TargetCharacteristic != null)
+                TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
+
             TargetCharacteristic = null;
         }
 
@@ -108,17 +120,34 @@ namespace XamarinFormsBox.ViewModels
             if (navigationData is ICharacteristic)
             {
                 TargetCharacteristic = (ICharacteristic)navigationData;
-                try
-                {
-                    await TargetCharacteristic.StartUpdatesAsync();
-                }
-                catch (Exception exc)
-                {
-                    await DialogService.ToastAsync($"Listen to updates: {exc.Message}");
-                }
             }
 
             await base.InitializeAsync_NEED_TO_DEFINE_LC(navigationData);
+        }
+
+        private async void OnResolveCharacteristicChangesSubsctiption()
+        {
+            if (TargetCharacteristic != null)
+            {
+                if (IsSubscribedToChanges)
+                {
+                    try
+                    {
+                        await TargetCharacteristic.StartUpdatesAsync();
+                        TargetCharacteristic.ValueUpdated += OnTargetCharacteristicValueUpdated;
+                    }
+                    catch (Exception exc)
+                    {
+                        await DialogService.ToastAsync($"Listen to updates: {exc.Message}");
+                        TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
+                        IsSubscribedToChanges = false;
+                    }
+                }
+                else
+                {
+                    TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
+                }
+            }
         }
 
         private byte[] EncodeStringToBytes(string source)
@@ -135,8 +164,6 @@ namespace XamarinFormsBox.ViewModels
             }
 
             if (result == null) result = new byte[] { };
-
-
 
             return result;
         }
@@ -167,7 +194,6 @@ namespace XamarinFormsBox.ViewModels
                             result = rawValue.ToHexString();
                         }
                     }
-
                     else if (TargetCharacteristic.Id == BLASpecificationCodes.BODY_SENSOR_LOCATION_CHARACTERISTIC)
                     {
                         if (rawValue.Any() && Enum.TryParse<BodySensorLocations>(rawValue.FirstOrDefault().ToString(), out BodySensorLocations parsed))
@@ -187,6 +213,14 @@ namespace XamarinFormsBox.ViewModels
 
                         result = $"{heartRate} {energyExpended}";
                     }
+                    else if (TargetCharacteristic.Id == BLASpecificationCodes.UART_RX_CHARACTERISTIC)
+                    {
+                        result = $"{rawValue.ToHexString()} hex bytes";
+                    }
+                    else if (TargetCharacteristic.Id == BLASpecificationCodes.UART_TX_CHARACTERISTIC)
+                    {
+                        result = $"{rawValue.ToHexString()} hex bytes";
+                    }
                     else
                     {
                         result = $"{rawValue.ToHexString()} hex bytes";
@@ -201,28 +235,6 @@ namespace XamarinFormsBox.ViewModels
             LastValueDateStamp = DateTime.Now;
 
             return result;
-        }
-
-        protected override void OnSubscribeOnAppEvents()
-        {
-            base.OnSubscribeOnAppEvents();
-
-            if (TargetCharacteristic != null)
-            {
-                TargetCharacteristic.ValueUpdated += OnTargetCharacteristicValueUpdated;
-            }
-        }
-
-        protected override void OnUnsubscribeFromAppEvents()
-        {
-            base.OnUnsubscribeFromAppEvents();
-
-            if (TargetCharacteristic != null)
-            {
-                TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
-
-
-            }
         }
 
         private void OnTargetCharacteristicValueUpdated(object sender, Plugin.BLE.Abstractions.EventArgs.CharacteristicUpdatedEventArgs e)

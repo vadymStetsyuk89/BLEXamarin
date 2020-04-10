@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using StBox.Locator;
 using XamarinFormsBox.ViewModels;
+using XamarinFormsBox.ViewModels.Authentication;
 
 namespace XamarinFormsBox.AppEnvironment
 {
@@ -13,6 +14,9 @@ namespace XamarinFormsBox.AppEnvironment
             builder.RegisterType<DeviceServicesViewModel>();
             builder.RegisterType<DeviceCharacteristicsViewModel>();
             builder.RegisterType<CharacteristicDetailsViewModel>();
+
+            builder.RegisterType<LogInPageViewModel>();
+            builder.RegisterType<RegisterPageViewModel>();
 
             /// Services Etc...
         }

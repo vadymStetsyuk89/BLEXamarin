@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "421100002982",
+    "firebase_url": "https://fireplural.firebaseio.com",
+    "project_id": "fireplural",
+    "storage_bucket": "fireplural.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421100002982:android:e4cdd827a453a709b8de67",
+        "android_client_info": {
+          "package_name": "com.companyname.xamarinformsbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421100002982-35om06m4vpsvmjkusv9blcq0at33c2pj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.companyname.xamarinformsbox",
+            "certificate_hash": "fae766f2b551c5c6a72ad0df387cd24c82b97b24"
+          }
+        },
+        {
+          "client_id": "421100002982-ts3mulv213ahmf2ct07rthokuvs2kop3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR970sqdKuCR0ipBiGfpKGwu9dewjVcxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421100002982-ts3mulv213ahmf2ct07rthokuvs2kop3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Firebase;
+using Firebase.Auth;
 using StBox.Android;
 
 namespace XamarinFormsBox.Droid
@@ -12,6 +14,8 @@ namespace XamarinFormsBox.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            FirebaseAuth.GetInstance(FirebaseApp.Instance);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -20,9 +24,6 @@ namespace XamarinFormsBox.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            /// Don't forget about platform specific `package init` due to StBox
-            /// 
-            //UserDialogs.Init(this);
             StBoxBootstrapper.Init(this);
 
             LoadApplication(new App());

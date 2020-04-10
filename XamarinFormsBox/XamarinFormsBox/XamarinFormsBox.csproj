@@ -22,31 +22,39 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.csproj" />
     <ProjectReference Include="..\..\StBox\StBox.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\DeviceServicesView.xaml.cs">
+    <Compile Update="Views\App\GattBLA\DeviceServicesView.xaml.cs">
       <DependentUpon>DeviceServicesView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\CharacteristicDetailsView.xaml">
+    <EmbeddedResource Update="Views\Authentication\LogInPageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DeviceCharacteristicsView.xaml">
+    <EmbeddedResource Update="Views\App\GattBLA\CharacteristicDetailsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DeviceServicesView.xaml">
+    <EmbeddedResource Update="Views\App\GattBLA\DeviceCharacteristicsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainPageView.xaml">
+    <EmbeddedResource Update="Views\App\GattBLA\DeviceServicesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\App\GattBLA\MainPageView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Authentication\RegisterPageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="AppEnvironment\Helpers\" />
+    <Folder Include="Models\Accounting\" />
   </ItemGroup>
 </Project>

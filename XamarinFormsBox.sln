@@ -4,11 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinFormsBox.Android", "XamarinFormsBox\XamarinFormsBox.Android\XamarinFormsBox.Android.csproj", "{489F5089-FEB5-4131-83E9-E6DF64BBC54D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77EA924E-9171-412F-9D7D-52603E58B1E4} = {77EA924E-9171-412F-9D7D-52603E58B1E4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinFormsBox.iOS", "XamarinFormsBox\XamarinFormsBox.iOS\XamarinFormsBox.iOS.csproj", "{CCC8DCE0-8F8F-4914-8E1C-642A529A07CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77EA924E-9171-412F-9D7D-52603E58B1E4} = {77EA924E-9171-412F-9D7D-52603E58B1E4}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinFormsBox", "XamarinFormsBox\XamarinFormsBox\XamarinFormsBox.csproj", "{DB312713-61A2-4EF2-9A74-B02202932331}"
 	ProjectSection(ProjectDependencies) = postProject
+		{77EA924E-9171-412F-9D7D-52603E58B1E4} = {77EA924E-9171-412F-9D7D-52603E58B1E4}
 		{390121AE-CAF4-4FB2-ABF0-643FEF806556} = {390121AE-CAF4-4FB2-ABF0-643FEF806556}
 	EndProjectSection
 EndProject
@@ -17,6 +24,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StBox.Android", "StBox.Android\StBox.Android.csproj", "{B899B802-3550-45C0-902D-CE5E9B6643E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaypenConsole", "PlaypenConsole\PlaypenConsole.csproj", "{D8AB4C94-F3A4-46D3-B1C5-31A3DC07D5E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{77EA924E-9171-412F-9D7D-52603E58B1E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{87413F5A-6147-4775-90C8-5E9EA8C0512C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClasses", "MyClasses\MyClasses.csproj", "{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClassesTest", "MyClassesTest\MyClassesTest.csproj", "{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,9 +133,49 @@ Global
 		{D8AB4C94-F3A4-46D3-B1C5-31A3DC07D5E4}.Release|iPhone.Build.0 = Release|Any CPU
 		{D8AB4C94-F3A4-46D3-B1C5-31A3DC07D5E4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{D8AB4C94-F3A4-46D3-B1C5-31A3DC07D5E4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|iPhone.Build.0 = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{77EA924E-9171-412F-9D7D-52603E58B1E4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|iPhone.Build.0 = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|iPhone.Build.0 = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D93BEFB-E445-40BE-AA61-CE8984A1FF2B} = {87413F5A-6147-4775-90C8-5E9EA8C0512C}
+		{3EF752B6-DEE4-4519-89EA-B67D3DF41D3A} = {87413F5A-6147-4775-90C8-5E9EA8C0512C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDAB4880-51B2-4A75-950E-80B4FCB94542}

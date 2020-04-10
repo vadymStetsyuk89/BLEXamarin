@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:StBox.Views.Controls;assembly=StBox"
+    xmlns:views="clr-namespace:StBox.Views;assembly=StBox"
+    x:Class="XamarinFormsBox.Views.Authentication.LogInPageView"
+    xmlns:locator="clr-namespace:StBox.Locator;assembly=StBox"
+    locator:ViewModelLocator.AutoWireViewModel="True">
+    <views:ContentPageBase.MainContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Text="Sign in" HorizontalOptions="Center" FontSize="Large" VerticalOptions="Center"/>
+
+                <StackLayout  Grid.Row="1"  Margin="12,0,12,0">
+                    <StackLayout>
+                        <StackLayout>
+                            <Label Text="Name"/>
+                            <controls:EntryExtended Text="{Binding Path=EmailInput, Mode=TwoWay}" BorderColor="LightGray" BorderWidth="1"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout>
+                        <StackLayout>
+                            <Label Text="Password"/>
+                            <controls:EntryExtended Text="{Binding Path=PasswordInput, Mode=TwoWay}" IsPassword="True" BorderColor="LightGray" BorderWidth="1"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <Label Text="{Binding Path=InfoMessage}" VerticalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+
+            <StackLayout Grid.Row="1">
+                <controls:ButtonControl Margin="0,12,0,12" BackgroundColor="LightBlue" ButtonFontSize="18" ButtonCommand="{Binding Path=OnSignInCommand}" ButtonText="Sign in"/>
+                <controls:ButtonControl ButtonCommand="{Binding Path=OnRegisterCommand}" ButtonText="Register"/>
+                <controls:ButtonControl ButtonCommand="{Binding Path=OnForgotPasswordCommand}" ButtonText="Forgot Password"/>
+                <controls:ButtonControl ButtonCommand="{Binding Path=OnResetVerificationLinkCommand}" ButtonText="Reset verification Email"/>
+            </StackLayout>
+        </Grid>
+    </views:ContentPageBase.MainContent>
+</views:ContentPageBase>

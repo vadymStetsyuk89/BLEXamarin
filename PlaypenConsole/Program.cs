@@ -11,6 +11,9 @@ namespace PlaypenConsole
             Console.WriteLine("Hello World!");
 
 
+            Guid gui = Guid.ParseExact("6e400001b5a3f393e0a9e50e24dcca9e","N");
+
+
             // Hexadecimal Representation of 0.0500
             //string HexRep = "00-00-00-08-83";
             //// Converting to integer

@@ -18,6 +18,8 @@
                 <Label Margin="12,0,12,0" Text="{Binding Path=TargetCharacteristic.Id}"/>
 
                 <Label FontSize="Medium" Margin="12,12,0,0" Text="{Binding Permissions, StringFormat='Permissions: {0}'}"/>
+
+                <Switch IsToggled="{Binding Path=IsSubscribedToChanges}"/>
             </StackLayout>
 
             <StackLayout Margin="12,12,12,0" Grid.Row="1">

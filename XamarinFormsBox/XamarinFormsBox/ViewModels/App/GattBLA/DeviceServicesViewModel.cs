@@ -4,7 +4,6 @@ using StBox.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsBox.AppEnvironment;
@@ -23,22 +22,19 @@ namespace XamarinFormsBox.ViewModels
         }
 
         private IDevice _targetDevice;
-        public IDevice TargetDevice
-        {
+        public IDevice TargetDevice {
             get => _targetDevice;
             private set => SetProperty<IDevice>(ref _targetDevice, value);
         }
 
         private bool _isConnected;
-        public bool IsConnected
-        {
+        public bool IsConnected {
             get => _isConnected;
             private set => SetProperty<bool>(ref _isConnected, value);
         }
 
         private List<ServiceItemViewModel> _services;
-        public List<ServiceItemViewModel> Services
-        {
+        public List<ServiceItemViewModel> Services {
             get => _services;
             private set => SetProperty<List<ServiceItemViewModel>>(ref _services, value);
         }
@@ -147,7 +143,8 @@ namespace XamarinFormsBox.ViewModels
                 {
                     if (service.Id == BLASpecificationCodes.BATTERY_SERVICE
                         || service.Id == BLASpecificationCodes.HEALTH_THERMOMETER_SERVICE
-                        || service.Id == BLASpecificationCodes.HEART_RATE_SERVICE)
+                        || service.Id == BLASpecificationCodes.HEART_RATE_SERVICE
+                        || service.Id == BLASpecificationCodes.UART_SERVICE)
                     {
                         result.Add(new ServiceItemViewModel(service));
                     }
