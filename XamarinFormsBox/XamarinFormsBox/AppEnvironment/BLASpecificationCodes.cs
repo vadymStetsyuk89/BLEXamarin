@@ -38,8 +38,8 @@ namespace XamarinFormsBox.AppEnvironment
             HEART_RATE_CONTROL_POINT_CHARACTERISTIC = 0x2A39.UuidFromPartial();
             HEART_RATE_MEASUREMENT_CHARACTERISTIC = 0x2A37.UuidFromPartial();
 
-            UART_TX_CHARACTERISTIC = 0x0002.UuidFromPartial();
-            UART_RX_CHARACTERISTIC = 0x0003.UuidFromPartial();
+            UART_TX_CHARACTERISTIC = Guid.ParseExact("6e400003b5a3f393e0a9e50e24dcca9e", "N");
+            UART_RX_CHARACTERISTIC = Guid.ParseExact("6e400002b5a3f393e0a9e50e24dcca9e", "N");
         }
     }
 }

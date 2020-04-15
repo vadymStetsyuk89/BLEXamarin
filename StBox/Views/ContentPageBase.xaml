@@ -60,16 +60,16 @@
 
                     <ContentView Grid.Row="0">
                         <!--  Main content spot  -->
-                        <controls:PullToRefreshLayout
+                        <!--<controls:PullToRefreshLayout
                             x:Name="_mainContentSpot_PullToRefreshLayout"
                             AbsoluteLayout.LayoutBounds="1,1,1,1"
                             AbsoluteLayout.LayoutFlags="All"
                             IsPullToRefreshEnabled="False"
                             RefreshBackgroundColor="White"
-                            RefreshColor="LightBlue">
+                            RefreshColor="LightBlue">-->
                             <Grid x:Name="_contentBox_Grid" >
                             </Grid>
-                        </controls:PullToRefreshLayout>
+                        <!--</controls:PullToRefreshLayout>-->
                     </ContentView>
 
                     <!--  Bottom bar spot  -->

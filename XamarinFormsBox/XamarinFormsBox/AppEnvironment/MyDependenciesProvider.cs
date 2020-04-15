@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using StBox.Locator;
+using XamarinFormsBox.Services;
+using XamarinFormsBox.Services.Contracts;
 using XamarinFormsBox.ViewModels;
 using XamarinFormsBox.ViewModels.Authentication;
 
@@ -18,7 +20,15 @@ namespace XamarinFormsBox.AppEnvironment
             builder.RegisterType<LogInPageViewModel>();
             builder.RegisterType<RegisterPageViewModel>();
 
-            /// Services Etc...
+            /// Services
+            builder.RegisterType<BLEDeviceService>().As<IBLEDeviceService>().SingleInstance();
+
+            /// Etc...
+        }
+
+        protected override void ProvideAppSettingsReducers()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

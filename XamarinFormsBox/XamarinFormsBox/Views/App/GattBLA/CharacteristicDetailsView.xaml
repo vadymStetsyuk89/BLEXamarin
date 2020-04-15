@@ -25,6 +25,18 @@
             <StackLayout Margin="12,12,12,0" Grid.Row="1">
                 <sTControls:ButtonControl Margin="0,0,0,12" BackgroundColor="LightGray" Grid.Column="0" ButtonText="Read value" ButtonCommand="{Binding Path=OnReadValueCommand}"/>
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--<sTControls:EntryExtended Grid.Column="0" Text="{Binding Path=CharacteristicWriteInput,Mode=TwoWay}"/>-->
+                    <Entry Grid.Column="0" Text="{Binding Path=CharacteristicWriteInput,Mode=TwoWay}"/>
+
+                    <sTControls:ButtonControl Grid.Column="1" ButtonCommand="{Binding Path=WriteValueCommand}" ButtonText="Writevalue"/>
+                </Grid>
+
                 <Label FontSize="Medium" VerticalOptions="Center" Text="{Binding Path=LastValueDateStamp,StringFormat='Value (at {0:hh:mm:ss}):'}"/>
                 <Label FontSize="Medium" VerticalOptions="Center" Text="{Binding Path=LastReadValue}"/>
 

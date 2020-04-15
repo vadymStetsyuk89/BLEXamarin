@@ -10,28 +10,45 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <sTControls:ButtonControl Margin="0,0,0,0" HorizontalOptions="Fill" ButtonBackgroundColor="LightGray" ButtonFontSize="16" Grid.Row="0" ButtonText="Scan for devices" ButtonCommand="{Binding Path=OnScanForeDevicesCommand}"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="Miss unknown" VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding Path=ExcludeUnknownDevices,Mode=TwoWay}"/>
+                </StackLayout>
 
-            <StackLayout Margin="0,12,0,6" Orientation="Horizontal" Grid.Row="1">
-                <Label FontSize="Small" Text="Is scanning: " VerticalTextAlignment="Center"/>
-                <Label FontSize="Medium" Text="{Binding Path=IsScanning}"/>
-            </StackLayout>
+                <sTControls:ButtonControl Grid.Column="0" HorizontalOptions="Fill" ButtonBackgroundColor="LightGray" ButtonFontSize="16"  ButtonText="Scan for devices" ButtonCommand="{Binding Path=OnScanForeDevicesCommand}"/>
+            </Grid>
 
-            <ListView Grid.Row="2" HasUnevenRows="True" ItemsSource="{Binding Path=Devices}">
+            <ListView Grid.Row="1" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding Path=Devices}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Margin="0,6,0,6">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=OnExploreDeviceCommand}"/>
-                                </StackLayout.GestureRecognizers>
-                                <Label FontSize="Medium" Text="{Binding Path=Name}"/>
-                                <Label Text="{Binding Path=Device.Id}"/>
-                            </StackLayout>
+                            <Grid Margin="6,0,6,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="60"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Margin="0,9,0,9" >
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=OnExploreDeviceCommand}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label FontSize="Medium" Text="{Binding Path=Name}"/>
+                                    <Label Text="{Binding Path=Device.Id}"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1" Spacing="0" Margin="0,6,0,6">
+                                    <Label Text="Rssi:"/>
+                                    <Label Text="{Binding Path=Device.Rssi}"/>
+                                </StackLayout>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

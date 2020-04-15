@@ -3,7 +3,6 @@ using StBox.Services;
 using Xamarin.Forms;
 using XamarinFormsBox.AppEnvironment;
 using XamarinFormsBox.ViewModels;
-using XamarinFormsBox.ViewModels.Authentication;
 
 namespace XamarinFormsBox
 {

@@ -57,6 +57,8 @@ namespace StBox.Locator
 
         public static T Resolve<T>() => _container.Resolve<T>();
 
+        public static bool IsRegistred<T>() => _container.IsRegistered<T>();
+
         public static void RegisterDependencies(DependenciesProvider dependenciesProvider)
         {
             if (_container != null) _container.Dispose();

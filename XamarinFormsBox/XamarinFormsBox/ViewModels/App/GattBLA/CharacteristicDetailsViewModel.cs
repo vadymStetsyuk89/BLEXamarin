@@ -3,6 +3,7 @@ using Plugin.BLE.Abstractions.Extensions;
 using StBox.ViewModels;
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -44,6 +45,34 @@ namespace XamarinFormsBox.ViewModels
                 await DialogService.ToastAsync($"Error: {exc.Message}");
             }
         });
+
+        public ICommand WriteValueCommand => new Command(async () =>
+        {
+            if (TargetCharacteristic != null)
+            {
+                try
+                {
+                    IsBusy = true;
+
+                    await TargetCharacteristic.WriteAsync(EncodeStringToBytes(CharacteristicWriteInput));
+                    CharacteristicWriteInput = string.Empty;
+                }
+                catch (Exception exc)
+                {
+                    await DialogService.ToastAsync($"Can't write walue. {exc.Message}");
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
+        });
+
+        private string _characteristicWriteInput;
+        public string CharacteristicWriteInput {
+            get => _characteristicWriteInput;
+            set => SetProperty<string>(ref _characteristicWriteInput, value);
+        }
 
         private string _writeValueInput = string.Empty;
         public string WriteValueInput {
@@ -108,6 +137,7 @@ namespace XamarinFormsBox.ViewModels
 
             WriteValueInput = string.Empty;
             LastReadValue = string.Empty;
+            CharacteristicWriteInput = string.Empty;
 
             if (TargetCharacteristic != null)
                 TargetCharacteristic.ValueUpdated -= OnTargetCharacteristicValueUpdated;
@@ -150,22 +180,40 @@ namespace XamarinFormsBox.ViewModels
             }
         }
 
-        private byte[] EncodeStringToBytes(string source)
+        private byte[] EncodeStringToBytes(string rawSource)
         {
-            byte[] result = null;
+            byte[] resultToByte16(string source) {
+                byte[] result = null;
 
-            if (!string.IsNullOrEmpty(source))
-            {
-                source
-                    .Split(' ')
-                    .Where(token => !string.IsNullOrEmpty(token))
-                    .Select(token => Convert.ToByte(token, 16))
-                    .ToArray();
+                if (!string.IsNullOrEmpty(source))
+                {
+                    result = source
+                        .Split(' ')
+                        .Where(token => !string.IsNullOrEmpty(token))
+                        .Select(token => Convert.ToByte(token, 16))
+                        .ToArray();
+                }
+
+                if (result == null) result = new byte[] { };
+
+                return result;
             }
 
-            if (result == null) result = new byte[] { };
+            byte[] resultExtractBytes(string source)
+            {
+                byte[] result = null;
 
-            return result;
+                if (!string.IsNullOrEmpty(source))
+                {
+                    result = Encoding.UTF8.GetBytes(source);
+                }
+
+                if (result == null) result = new byte[] { };
+
+                return result;
+            }
+
+            return resultExtractBytes(rawSource);
         }
 
         private string TryExtractCharacteristicValue(byte[] rawValue)

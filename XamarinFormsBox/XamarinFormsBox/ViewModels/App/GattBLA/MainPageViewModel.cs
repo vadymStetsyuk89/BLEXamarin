@@ -1,96 +1,102 @@
-﻿using Plugin.BLE;
-using Plugin.BLE.Abstractions.Contracts;
+﻿using Plugin.BLE.Abstractions.Contracts;
 using StBox.ViewModels;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XamarinFormsBox.Services.Contracts;
 
 namespace XamarinFormsBox.ViewModels
 {
     public class MainPageViewModel : ContentPageBaseViewModel
     {
-        private const int SCANING_TIMEOUT = 5000;
+        private readonly IBLEDeviceService _bLEDeviceService;
 
-        private IBluetoothLE _ble;
-        private IAdapter _adapter;
-
-        public MainPageViewModel()
+        public MainPageViewModel(IBLEDeviceService bLEDeviceService)
         {
+            _bLEDeviceService = bLEDeviceService;
+
             Devices = new ObservableCollection<DeviceItemViewModel>();
-
-            _ble = CrossBluetoothLE.Current;
-            _adapter = CrossBluetoothLE.Current.Adapter;
-
-            _adapter.DeviceDiscovered += OnAdapterDeviceDiscovered;
-
-            _adapter.ScanTimeoutElapsed += OnAdapterScanTimeoutElapsed;
         }
 
         public ICommand OnScanForeDevicesCommand => new Command(async () =>
         {
+
+            IsBusy = _bLEDeviceService.IsScanning;
             Devices.Clear();
 
-            if (_ble.State == BluetoothState.On)
-            {
-                if (_adapter.IsScanning)
-                {
-                    await DialogService.ToastAsync("Wait, still scanning.");
-                }
-                else
-                {
-                    _adapter.ScanTimeout = SCANING_TIMEOUT;
+            List<IDevice> exploredDevices = await _bLEDeviceService.ScanForDevicesAsync();
 
-                    try
-                    {
-                        IsScanning = true;
-                        await _adapter.StartScanningForDevicesAsync();
-                    }
-                    catch
-                    {
-                        IsScanning = false;
-                    }
-                }
-            }
-            else
+            foreach (DeviceItemViewModel deviceVM in exploredDevices
+                .Where(device => ExcludeUnknownDevices ? !string.IsNullOrEmpty(device.Name) : true)
+                .Select(device => BuildDeviceItem(device)))
             {
-                await DialogService.ToastAsync("Turn on bluetooth.");
+                Devices.Add(deviceVM);
             }
+
+            IsBusy = _bLEDeviceService.IsScanning;
+
+
+
+
+            //Devices.Clear();
+
+            //if (_ble.State == BluetoothState.On)
+            //{
+            //    if (_adapter.IsScanning)
+            //    {
+            //        await DialogService.ToastAsync("Wait, still scanning.");
+            //    }
+            //    else
+            //    {
+            //        _adapter.ScanTimeout = SCANING_TIMEOUT;
+
+            //        try
+            //        {
+            //            IsBusy = true;
+            //            await _adapter.StartScanningForDevicesAsync();
+            //        }
+            //        catch (Exception exc)
+            //        {
+            //            await DialogService.ToastAsync($"Boom while scanning. {exc.Message}.");
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    await DialogService.ToastAsync("Turn on bluetooth.");
+            //}
         });
 
         private ObservableCollection<DeviceItemViewModel> _devices;
-        public ObservableCollection<DeviceItemViewModel> Devices
-        {
+        public ObservableCollection<DeviceItemViewModel> Devices {
             get => _devices;
             private set => SetProperty<ObservableCollection<DeviceItemViewModel>>(ref _devices, value);
         }
 
-        private bool _isScanning;
-        public bool IsScanning
-        {
-            get => _isScanning;
-            private set {
-                IsBusy = value;
-                SetProperty<bool>(ref _isScanning, value);
-            }
+        private bool _excludeUnknownDevices;
+        public bool ExcludeUnknownDevices {
+            get => _excludeUnknownDevices;
+            set => SetProperty<bool>(ref _excludeUnknownDevices, value);
         }
 
-        private void OnAdapterDeviceDiscovered(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
-        {
-            IDevice incommingDevice = e.Device;
-            DeviceItemViewModel existingDevice = Devices.FirstOrDefault(deviceItem => deviceItem.Device.Id == incommingDevice.Id);
+        //private void OnAdapterDeviceDiscovered(object sender, Plugin.BLE.Abstractions.EventArgs.DeviceEventArgs e)
+        //{
+        //    IDevice incommingDevice = e.Device;
+        //    DeviceItemViewModel existingDevice = Devices.FirstOrDefault(deviceItem => deviceItem.Device.Id == incommingDevice.Id);
 
-            if (existingDevice != null)
-            {
-                int index = Devices.IndexOf(existingDevice);
-                Devices.Add(BuildDeviceItem(incommingDevice));
-                Devices.Remove(existingDevice);
-            }
-            else
-            {
-                Devices.Add(BuildDeviceItem(incommingDevice));
-            }
-        }
+        //    if (existingDevice != null)
+        //    {
+        //        int index = Devices.IndexOf(existingDevice);
+        //        Devices.Add(BuildDeviceItem(incommingDevice));
+        //        Devices.Remove(existingDevice);
+        //    }
+        //    else
+        //    {
+        //        Devices.Add(BuildDeviceItem(incommingDevice));
+        //    }
+        //}
 
         private DeviceItemViewModel BuildDeviceItem(IDevice source)
         {
@@ -99,7 +105,7 @@ namespace XamarinFormsBox.ViewModels
 
         private void OnAdapterScanTimeoutElapsed(object sender, System.EventArgs e)
         {
-            IsScanning = false;
+            IsBusy = false;
         }
     }
 }

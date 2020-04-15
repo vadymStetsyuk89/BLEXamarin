@@ -1,5 +1,7 @@
 ﻿using Android.Content;
+using Android.Runtime;
 using Android.Support.V4.Widget;
+using Android.Util;
 using Android.Views;
 using StBox.Android.Renderers;
 using StBox.Views.Controls;
@@ -19,6 +21,12 @@ namespace StBox.Android.Renderers
 
         public PullToRefreshLayoutRenderer(Context context)
             : base(context) { }
+
+        public PullToRefreshLayoutRenderer(Context context, IAttributeSet attrs)
+            : base(context, attrs) { }
+
+        protected PullToRefreshLayoutRenderer(IntPtr javaReference, JniHandleOwnership transfer)
+            : base(javaReference, transfer) { }
 
         public static void Init() { }
 
@@ -122,7 +130,7 @@ namespace StBox.Android.Renderers
             //
             //Measure child here and determine size
             //
-            return new SizeRequest(new Size(_packed.View.MeasuredWidth, _packed.View.MeasuredHeight));
+            return new SizeRequest(new Xamarin.Forms.Size(_packed.View.MeasuredWidth, _packed.View.MeasuredHeight));
         }
 
         /// <summary>

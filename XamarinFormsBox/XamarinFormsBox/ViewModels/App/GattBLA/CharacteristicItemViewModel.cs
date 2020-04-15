@@ -4,6 +4,7 @@ using StBox.Locator;
 using StBox.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XamarinFormsBox.AppEnvironment;
 
 namespace XamarinFormsBox.ViewModels
 {
@@ -14,6 +15,18 @@ namespace XamarinFormsBox.ViewModels
         {
             Characteristic = source;
             Name = Characteristic.Name;
+
+#if DEBUG
+            if (BLASpecificationCodes.UART_TX_CHARACTERISTIC == source.Id)
+            {
+                Name = "TX Characteristic";
+            }
+            else if (BLASpecificationCodes.UART_RX_CHARACTERISTIC == source.Id)
+            {
+                Name = "RX Characteristic";
+
+            }
+#endif
         }
 
         public ICommand OnExploreCharacteristicCommand => new Command(async () =>
